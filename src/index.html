@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Memory Game</title>
+  </head>
+  <body>
+    <div class="app">
+      <div class="start-page">
+        <div class="background-start">
+          <h1 class="game-title">Memory Game</h1>
+          <div class="game-level">
+            <button class="button-level">8</button>
+            <button class="button-level">16</button>
+            <button class="button-level">32</button>
+          </div>
+          <button class="start-button" type="button">START</button>
+        </div>
+      </div>
+      <div class="game-board">
+        <div class="front"></div>
+        <div class="back"></div>
+      </div>
+      <div class="mistakes">MISTAKES: <span>0</span></div>
+      <div class="end-page">
+        <div class="background-end">
+          <h1 class="end-title">All pairs matched!</h1>
+          <div class="game-level">
+            <button class="button-level">8</button>
+            <button class="button-level">16</button>
+            <button class="button-level">32</button>
+          </div>
+          <button class="retry-button" type="button">TRY AGAIN</button>
+          <p class="end-mis">You made <span>0</span> mistakes.</p>
+        </div>
+      </div>
+    </div>
+    <script type="module" src="app.js"></script>
+  </body>
+</html>
