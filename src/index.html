@@ -7,6 +7,13 @@
   </head>
   <body>
     <div class="app">
+      <div class="history-page">
+        <div class="elements-his">
+          <button class="close-his-btn" type="button">CLOSE</button>
+          <button class="clear-his-btn" type="button">CLEAR</button>
+        </div>
+        <div class="stats-his"></div>
+      </div>
       <div class="start-page">
         <div class="background-start">
           <h1 class="game-title">Memory Game</h1>
@@ -16,6 +23,7 @@
             <button class="button-level">32</button>
           </div>
           <button class="start-button" type="button">START</button>
+          <img src="./image/history.png" alt="" class="check-history-img" />
         </div>
       </div>
       <div class="game-board">
@@ -23,6 +31,7 @@
         <div class="back"></div>
       </div>
       <div class="mistakes">MISTAKES: <span>0</span></div>
+      <div class="timer">00:00:00</div>
       <div class="end-page">
         <div class="background-end">
           <h1 class="end-title">All pairs matched!</h1>
@@ -32,7 +41,9 @@
             <button class="button-level">32</button>
           </div>
           <button class="retry-button" type="button">TRY AGAIN</button>
-          <p class="end-mis">You made <span>0</span> mistakes.</p>
+          <p class="end-time">Your time: <span>00:00:00</span></p>
+          <p class="end-mis">You made <span>0</span> mistakes</p>
+          <img src="./image/history.png" alt="" class="check-history-img" />
         </div>
       </div>
     </div>

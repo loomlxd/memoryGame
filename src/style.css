@@ -1,5 +1,6 @@
 @import url("https://fonts.googleapis.com/css2?family=Henny+Penny&family=Limelight&display=swap");
 @import url("https://fonts.googleapis.com/css2?family=Rubik+Distressed&display=swap");
+@import url("https://fonts.googleapis.com/css2?family=Roboto+Flex:opsz,wght@8..144,100..1000&display=swap");
 
 body {
   overflow: hidden;
@@ -121,6 +122,23 @@ body {
   opacity: 1;
 }
 
+.timer {
+  position: absolute;
+  font-size: 30px;
+  font-family: "Rubik Distressed", system-ui;
+  transition: all 0.2s ease;
+  color: rgb(0, 0, 0);
+  top: 30px;
+  right: 30px;
+  visibility: hidden;
+  opacity: 0;
+}
+
+.timer.active {
+  visibility: visible;
+  opacity: 1;
+}
+
 .end-page {
   display: flex;
   flex-direction: column;
@@ -176,8 +194,14 @@ body {
 .end-mis {
   font-size: 30px;
   font-family: "Rubik Distressed", system-ui;
-  margin: 30px;
   color: rgb(255, 0, 0);
+}
+
+.end-time {
+  font-size: 30px;
+  font-family: "Rubik Distressed", system-ui;
+  color: rgb(0, 0, 0);
+  margin-bottom: -20px;
 }
 
 .background-start {
@@ -213,10 +237,111 @@ body {
   cursor: pointer;
   border: none;
   border-radius: 20px;
-  transition: all 0.2s ease; 
+  transition: all 0.2s ease;
   margin: 20px 10px;
 }
 
 .button-level.active {
   outline: 5px solid rgb(160, 255, 160);
+}
+
+.history-page {
+  position: absolute;
+  width: 600px;
+  height: 800px;
+  background-color: white;
+  z-index: 3;
+  top: 50%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  border-radius: 20px;
+  font-size: 25px;
+  font-family: "Roboto Flex", sans-serif;
+  padding: 20px;
+  overflow: auto;
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+  transition: all 0.3s ease;
+}
+
+.history-page.active {
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.inside-history {
+  display: flex;
+  justify-content: space-around;
+  margin-bottom: 20px;
+}
+
+.close-his-btn {
+  cursor: pointer;
+  font-family: "Henny Penny", system-ui;
+  font-size: 20px;
+  padding: 10px 15px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(255, 131, 131);
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  z-index: 3;
+}
+
+.close-his-btn:hover {
+  scale: 0.95;
+  box-shadow: inset 0px 0px 20px rgba(95, 14, 14, 0.5);
+}
+
+.close-his-btn:active {
+  scale: 0.85;
+}
+
+.clear-his-btn {
+  cursor: pointer;
+  font-family: "Henny Penny", system-ui;
+  font-size: 15px;
+  padding: 5px 7.5px;
+  border-radius: 20px;
+  border: none;
+  background-color: rgb(255, 253, 150);
+  transition: all 0.3s ease;
+  margin-bottom: 30px;
+  z-index: 3;
+}
+
+.clear-his-btn:hover {
+  scale: 0.95;
+  box-shadow: inset 0px 0px 20px rgba(87, 95, 14, 0.5);
+}
+
+.clear-his-btn:active {
+  scale: 0.85;
+}
+
+.check-history-img {
+  width: 50px;
+  height: 50px;
+  cursor: pointer;
+  filter: invert(1);
+  transition: all 0.2s ease;
+  visibility: visible;
+  pointer-events: auto;
+  opacity: 1;
+}
+
+.check-history-img.disable {
+  visibility: hidden;
+  pointer-events: none;
+  opacity: 0;
+}
+
+.check-history-img:hover {
+  scale: 1.05;
+}
+
+.check-history-img:active {
+  scale: 0.95;
 }

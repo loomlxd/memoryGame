@@ -1,4 +1,5 @@
 import "./style.css";
+import Timer from "./timer";
 
 const refs = {
   gameBoard: document.querySelector(".game-board"),
@@ -12,7 +13,16 @@ const refs = {
   mistakesCount: document.querySelector(".mistakes > span"),
   mistakesCountInEndPage: document.querySelector(".end-mis > span"),
   levelButtons: document.querySelectorAll(".button-level"),
+  timer: document.querySelector(".timer"),
+  finishTime: document.querySelector(".end-time > span"),
+  checkHistoryBtn: document.querySelectorAll(".check-history-img"),
+  historyPage: document.querySelector(".history-page"),
+  closeHisBtn: document.querySelector(".close-his-btn"),
+  clearHisBtn: document.querySelector(".clear-his-btn"),
+  historyInfo: document.querySelector(".stats-his"),
 };
+
+const newTimer = new Timer(refs.timer);
 
 const cards = [
   "🐸",
@@ -54,6 +64,9 @@ let trueAnswers = [];
 let totalMistakes = 0;
 let countOfCards = 8;
 let animationInterval = null;
+let history = [];
+
+historyPageUpdate();
 
 function shuffleCardsForFirstRound(cards, count) {
   const splicedCards = cards.slice(0, count);
@@ -282,8 +295,16 @@ function reverseCardsToFrontInStart() {
 function showEndPage() {
   setTimeout(() => {
     refs.mistakes.classList.remove("active");
+    newTimer.stop();
+    refs.timer.textContent = "00:00:00";
+    refs.timer.classList.remove("active");
     refs.endPage.classList.add("active");
   }, 500);
+
+  localStorageUpdate();
+  historyPageUpdate();
+
+  refs.finishTime.textContent = refs.timer.textContent;
   refs.mistakesCountInEndPage.textContent = totalMistakes;
 
   setTimeout(() => {
@@ -316,6 +337,7 @@ function onRetryBtnClick() {
 
 function showGameProcess() {
   refs.mistakes.classList.add("active");
+  refs.timer.classList.add("active");
   let elements = [...refs.allBackCards];
   for (let i = 0; i < refs.allBackCards.length; i += 1) {
     elements[i].style.transition = "transform 0.2s linear";
@@ -336,14 +358,17 @@ function showGameProcess() {
       if (countOfCards === 8) {
         setTimeout(() => {
           reverseCardsToBackInEnd();
+          newTimer.start();
         }, 1000);
       } else if (countOfCards === 16) {
         setTimeout(() => {
           reverseCardsToBackInEnd();
+          newTimer.start();
         }, 2000);
       } else if (countOfCards === 32) {
         setTimeout(() => {
           reverseCardsToBackInEnd();
+          newTimer.start();
         }, 4000);
       }
     }, 200);
@@ -352,4 +377,68 @@ function showGameProcess() {
 
 function showMistakeCount() {
   refs.mistakesCount.textContent = totalMistakes;
+}
+
+function localStorageUpdate() {
+  if (localStorage.getItem("stat") !== null) {
+    const savedHistory = localStorage.getItem("stat");
+    history = JSON.parse(savedHistory);
+  }
+
+  const totalStat = {
+    cards: countOfCards,
+    mistakes: totalMistakes,
+    time: refs.timer.textContent,
+  };
+
+  history.push(totalStat);
+
+  localStorage.setItem("stat", JSON.stringify(history));
+}
+
+function historyPageUpdate() {
+  const allHistory = localStorage.getItem("stat");
+  if (allHistory === null) {
+    return;
+  }
+
+  const textHistoryForHtml = JSON.parse(allHistory)
+    .map(({ cards, mistakes, time }, id) => {
+      return `<div class="inside-history">
+            <span>${
+              id + 1
+            }:</span> <span>cards: ${cards}</span> <span>mistakes: ${mistakes}</span>
+            <span>time: ${time}</span>
+          </div>`;
+    })
+    .join("");
+
+  refs.historyInfo.innerHTML = textHistoryForHtml;
+}
+
+refs.checkHistoryBtn.forEach((btn) => {
+  btn.addEventListener("click", onCheckHistoryBtnClick);
+});
+
+function onCheckHistoryBtnClick(e) {
+  e.target.classList.add("disable");
+  refs.historyPage.classList.add("active");
+  refs.closeHisBtn.classList.add("active");
+}
+
+refs.closeHisBtn.addEventListener("click", onCloseHisBtnClick);
+
+function onCloseHisBtnClick(e) {
+  refs.historyPage.classList.remove("active");
+  refs.checkHistoryBtn.forEach((btn) => {
+    btn.classList.remove("disable");
+  });
+}
+
+refs.clearHisBtn.addEventListener("click", onClearHisBtnClick);
+
+function onClearHisBtnClick() {
+  refs.historyInfo.innerHTML = "";
+  localStorage.removeItem("stat");
+  history = [];
 }
