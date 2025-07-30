@@ -5,7 +5,8 @@ import {
   createBlockByAllCards,
 } from "./CardRenderer";
 import refs from "./refs";
-import { localStorageUpdate, historyPageUpdate } from "./HistoryManager";
+import { localStorageUpdate } from "./HistoryManager";
+import { historyPageUpdate } from "./UIHandler";
 import Timer from "./timer";
 import { gameState } from "./gameState";
 

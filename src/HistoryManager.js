@@ -1,10 +1,21 @@
 import { gameState } from "./gameState";
 import refs from "./refs";
 
+const STAT_KEY = "stat";
+
 export function localStorageUpdate() {
-  if (localStorage.getItem("stat") !== null) {
-    const savedHistory = localStorage.getItem("stat");
-    gameState.history = JSON.parse(savedHistory);
+  const localStorageStat = localStorage.getItem(STAT_KEY);
+
+  if (localStorageStat !== null) {
+    try {
+      savedHistory = JSON.parse(localStorageStat);
+      if (!Array.isArray(savedHistory)) {
+        savedHistory = [];
+      }
+    } catch (e) {
+      console.warn("Invalid JSON в localStorage. History cleaned.");
+      savedHistory = [];
+    }
   }
 
   const totalStat = {
@@ -15,25 +26,5 @@ export function localStorageUpdate() {
 
   gameState.history.push(totalStat);
 
-  localStorage.setItem("stat", JSON.stringify(gameState.history));
-}
-
-export function historyPageUpdate() {
-  const allHistory = localStorage.getItem("stat");
-  if (allHistory === null) {
-    return;
-  }
-
-  const textHistoryForHtml = JSON.parse(allHistory)
-    .map(({ cards, mistakes, time }, id) => {
-      return `<div class="inside-history">
-            <span>${
-              id + 1
-            }:</span> <span>cards: ${cards}</span> <span>mistakes: ${mistakes}</span>
-            <span>time: ${time}</span>
-          </div>`;
-    })
-    .join("");
-
-  refs.historyInfo.innerHTML = textHistoryForHtml;
+  localStorage.setItem(STAT_KEY, JSON.stringify(gameState.history));
 }

@@ -1,6 +1,6 @@
 import "./style.css";
 import { animateBackground } from "./CardRenderer";
-import { historyPageUpdate } from "./HistoryManager";
+import { historyPageUpdate } from "./UIHandler";
 
 historyPageUpdate();
 

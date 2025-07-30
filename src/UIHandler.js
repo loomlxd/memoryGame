@@ -78,3 +78,25 @@ function reverseCardsToBack() {
 function showMistakeCount() {
   refs.mistakesCount.textContent = gameState.totalMistakes;
 }
+
+const STAT_KEY = "stat";
+
+export function historyPageUpdate() {
+  const allHistory = localStorage.getItem(STAT_KEY);
+  if (allHistory === null) {
+    return;
+  }
+
+  const textHistoryForHtml = JSON.parse(allHistory)
+    .map(({ cards, mistakes, time }, id) => {
+      return `<div class="inside-history">
+            <span>${
+              id + 1
+            }:</span> <span>cards: ${cards}</span> <span>mistakes: ${mistakes}</span>
+            <span>time: ${time}</span>
+          </div>`;
+    })
+    .join("");
+
+  refs.historyInfo.innerHTML = textHistoryForHtml;
+}
